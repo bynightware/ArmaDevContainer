@@ -15,8 +15,11 @@
     },
 
 	"mounts": [
-		"source=opencode-data,target=/home/vscode/.local/state/opencode,type=volume,volume-opt=uid=1000,volume-opt=gid=1000,consistency=cached",
-		"source=opencode-config,target=/home/vscode/.config/opencode,type=volume,volume-opt=uid=1000,volume-opt=gid=1000,consistency=cached",
+		// the jbdevcontainer plugin rewrites XDG_{CONFIG,DATA}_HOME to /.jbdevcontainer/{config,data}
+		"source=opencode-data,target=/.jbdevcontainer/data/opencode,type=volume,volume-opt=uid=1000,volume-opt=gid=1000,consistency=cached",
+		"source=opencode-config,target=/.jbdevcontainer/config/opencode,type=volume,volume-opt=uid=1000,volume-opt=gid=1000,consistency=cached",
+		"source=opencode-cache,target=/.jbdevcontainer/opencode,type=volume,volume-opt=uid=1000,volume-opt=gid=1000,consistency=cached",
+		"source=opencode-state,target=/home/vscode/.local/state/opencode,type=volume,volume-opt=uid=1000,volume-opt=gid=1000,consistency=cached",
 		"source=wine-prefix,target=/home/vscode/.wine,type=volume,volume-opt=uid=1000,volume-opt=gid=1000,consistency=cached",
 		"source=${localEnv:ARMA3_TOOLS_PATH:C:\\Program Files (x86)\\Steam\\steamapps\\common\\Arma 3 Tools},target=/home/vscode/.local/share/arma3tools,type=bind,readonly"
 	],
