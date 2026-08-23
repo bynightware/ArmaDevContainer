@@ -17,24 +17,29 @@
 	"mounts": [
 		"source=opencode-data,target=/home/vscode/.local/state/opencode,type=volume,volume-opt=uid=1000,volume-opt=gid=1000,consistency=cached",
 		"source=opencode-config,target=/home/vscode/.config/opencode,type=volume,volume-opt=uid=1000,volume-opt=gid=1000,consistency=cached",
-		"source=C:\\Program Files (x86)\\Steam\\steamapps\\common\\Arma 3 Tools,target=/home/vscode/.local/share/arma3tools,type=bind,readonly"
+		"source=wine-prefix,target=/home/vscode/.wine,type=volume,volume-opt=uid=1000,volume-opt=gid=1000,consistency=cached",
+		"source=${localEnv:ARMA3_TOOLS_PATH:C:\\Program Files (x86)\\Steam\\steamapps\\common\\Arma 3 Tools},target=/home/vscode/.local/share/arma3tools,type=bind,readonly"
 	],
 
 	"containerEnv": {
-		"HEMTT_BI_TOOLS": "/home/vscode/.local/share/arma3tools"
+		"HEMTT_BI_TOOLS": "/home/vscode/.local/share/arma3tools",
+		"WINEPREFIX": "/home/vscode/.wine"
 	},
+
+	"postStartCommand": "/usr/local/bin/arma-startup-checks",
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Configure tool-specific properties.
-  "customizations" : {
+	"customizations" : {
     "jetbrains" : {
+	  // CLion release target: 2026.2.1
       "backend" : "CLion",
 	  "plugins" : [
 	    "com.github.copilot",
 		"com.github.catatafishen.ideagentforcopilot",
-        "com.jetbrains.plugins.arma.arma-plugin"
+		"com.jetbrains.plugins.arma.arma-plugin"
 	  ]
     }
   },

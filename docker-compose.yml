@@ -1,5 +1,3 @@
-version: '3.8'
-
 # Run this file on Docker Desktop's Linux containers engine.
 
 services:
@@ -8,10 +6,16 @@ services:
       dockerfile: Dockerfile
     image: arma-dev:latest
     container_name: arma-devcontainer
+    user: vscode
+    environment:
+      HEMTT_BI_TOOLS: /home/vscode/.local/share/arma3tools
+      WINEPREFIX: /home/vscode/.wine
     volumes:
       - './:${WORKSPACE_ROOT:-/workspace}'
       - 'clion-cache:/home/vscode/.cache/JetBrains'
       - 'clion-config:/home/vscode/.config/JetBrains'
+      - 'wine-prefix:/home/vscode/.wine'
+      - '${ARMA3_TOOLS_PATH:-C:\Program Files (x86)\Steam\steamapps\common\Arma 3 Tools}:/home/vscode/.local/share/arma3tools:ro'
       - 'build-cache:/workspace/build'
     stdin_open: true
     tty: true
@@ -19,4 +23,5 @@ services:
 volumes:
   clion-cache:
   clion-config:
+  wine-prefix:
   build-cache:

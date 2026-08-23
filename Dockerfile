@@ -9,8 +9,24 @@ RUN dpkg --add-architecture i386 \
         curl \
         wine \
         wine32 \
+        wine64 \
+        winbind \
+        fonts-liberation \
+        cabextract \
+        unzip \
+        git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+ENV WINEPREFIX="/home/vscode/.wine"
+
+COPY .docker/scripts/verify-container.sh /usr/local/bin/arma-verify-container
+COPY .docker/scripts/startup-checks.sh /usr/local/bin/arma-startup-checks
+
+RUN chmod +x /usr/local/bin/arma-verify-container /usr/local/bin/arma-startup-checks \
+    && mkdir -p /home/vscode/.wine \
+    && chown -R vscode:vscode /home/vscode/.wine \
+    && su -s /bin/bash vscode -c 'HOME=/home/vscode WINEPREFIX=/home/vscode/.wine wineboot --init'
 
 # Install HEMTT for the devcontainer user during image build rather than on
 # every container creation.
