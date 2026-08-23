@@ -1,0 +1,22 @@
+version: '3.8'
+
+# Run this file on Docker Desktop's Linux containers engine.
+
+services:
+  devcontainer:
+    build:
+      dockerfile: Dockerfile
+    image: arma-dev:latest
+    container_name: arma-devcontainer
+    volumes:
+      - './:${WORKSPACE_ROOT:-/workspace}'
+      - 'clion-cache:/home/vscode/.cache/JetBrains'
+      - 'clion-config:/home/vscode/.config/JetBrains'
+      - 'build-cache:/workspace/build'
+    stdin_open: true
+    tty: true
+
+volumes:
+  clion-cache:
+  clion-config:
+  build-cache:

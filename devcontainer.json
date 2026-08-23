@@ -1,0 +1,44 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/cpp
+{
+	"name": "C++",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	"features": {
+      // ca-certificates required to install opencode
+      "ghcr.io/devcontainer-community/devcontainer-features/ca-certificates:latest": {},
+      "ghcr.io/devcontainer-community/devcontainer-features/opencode.ai:1": { "version": "latest" },
+      "ghcr.io/devcontainer-community/devcontainer-features/astral.sh-uv:1": { "shellautocompletion": true }
+    },
+
+	"mounts": [
+		"source=opencode-data,target=/home/vscode/.local/state/opencode,type=volume,volume-opt=uid=1000,volume-opt=gid=1000,consistency=cached",
+		"source=opencode-config,target=/home/vscode/.config/opencode,type=volume,volume-opt=uid=1000,volume-opt=gid=1000,consistency=cached",
+		"source=C:\\Program Files (x86)\\Steam\\steamapps\\common\\Arma 3 Tools,target=/home/vscode/.local/share/arma3tools,type=bind,readonly"
+	],
+
+	"containerEnv": {
+		"HEMTT_BI_TOOLS": "/home/vscode/.local/share/arma3tools"
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Configure tool-specific properties.
+  "customizations" : {
+    "jetbrains" : {
+      "backend" : "CLion",
+	  "plugins" : [
+	    "com.github.copilot",
+		"com.github.catatafishen.ideagentforcopilot",
+        "com.jetbrains.plugins.arma.arma-plugin"
+	  ]
+    }
+  },
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
